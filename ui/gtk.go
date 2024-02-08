@@ -3,9 +3,9 @@ package ui
 import (
 	"fmt"
 	"path/filepath"
-
 	"github.com/gotk3/gotk3/gdk"
 	"github.com/gotk3/gotk3/gtk"
+	// "github.com/gotk3/gotk3/glib"
 )
 
 // MustWindow returns a new gtk.Window, if error panics.
@@ -44,6 +44,8 @@ func MustProgressBar() *gtk.ProgressBar {
 	if err != nil {
 		panic(err)
 	}
+	ctx, _ := p.GetStyleContext()
+	ctx.AddClass("labelbig")
 
 	return p
 }
@@ -55,6 +57,8 @@ func MustLabel(label string, args ...interface{}) *gtk.Label {
 		panic(err)
 	}
 
+	ctx, _ := l.GetStyleContext()
+	ctx.AddClass("labelbig")
 	l.SetMarkup(fmt.Sprintf(label, args...))
 	return l
 }
@@ -73,7 +77,9 @@ const LabelImageSize = 20
 func MustLabelWithImage(img, label string, args ...interface{}) *LabelWithImage {
 	l := MustLabel(label, args...)
 	b := MustBox(gtk.ORIENTATION_HORIZONTAL, 5)
-	b.Add(MustImageFromFileWithSize(img, LabelImageSize, LabelImageSize))
+	if(img != ""){
+		b.Add(MustImageFromFileWithSize(img, LabelImageSize, LabelImageSize))
+	}
 	b.Add(l)
 
 	return &LabelWithImage{Label: l, Box: b}
@@ -114,6 +120,8 @@ func MustButtonImageFromImage(label string, img *gtk.Image, clicked func()) *gtk
 	b.SetImagePosition(gtk.POS_TOP)
 	b.SetVExpand(true)
 	b.SetHExpand(true)
+	ctx, _ := b.GetStyleContext()
+	ctx.AddClass("labelbig")
 
 	if clicked != nil {
 		b.Connect("clicked", clicked)
@@ -171,9 +179,66 @@ func imagePath(img string) string {
 // MustOverlay returns a new gtk.Overlay, if error panics.
 func MustOverlay() *gtk.Overlay {
 	o, err := gtk.OverlayNew()
+	
+	ctx, _ := o.GetStyleContext()
+	ctx.AddClass("labelbig")
 	if err != nil {
 		panic(err)
 	}
 
 	return o
 }
+
+//Создаем билдера, есали не создали - паникуем
+func MustBuilder() *gtk.Builder {
+	bldr, err := gtk.BuilderNew()
+	if err != nil {
+		panic(err)
+	}
+
+	return bldr
+}
+
+func GladePath(glade string) string {
+	return filepath.Join(StylePath, GladeFolder, glade)
+}
+
+//Создаем Выпадающее меню, если не создали - паникуем
+func MustComboBoxText() *gtk.ComboBoxText {
+	cmb, err := gtk.ComboBoxTextNew()
+	
+	ctx, _ := cmb.GetStyleContext()
+	ctx.AddClass("combobox")
+	if err != nil {
+		panic(err)
+	}
+
+	return cmb
+}
+
+// //Создаем , если не создали - паникуем
+// func MustRadioButton(groupLang *glib.SList, label string) *gtk.RadioButton {
+	// rb, err := gtk.RadioButtonNewWithLabel(groupLang, label)
+	
+
+	// ctx, _ := rb.GetStyleContext()
+	// ctx.AddClass("combobox")
+	// if err != nil {
+		// panic(err)
+	// }
+
+	// return rb
+// }
+
+
+
+// MustImageFromFile returns a new gtk.Image based on the given file, If error
+// panics.
+// func (ui *UI) MustFormFromFile(glade string) *gtk.Builder {
+	// b, err := gtk.AddFromFile(gladePath(glade))
+	// if err != nil {
+		// panic(err)
+	// }
+
+	// return b
+// }

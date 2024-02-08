@@ -102,6 +102,16 @@ func (v *ComboBox) SetActive(index int) {
 	C.gtk_combo_box_set_active(v.native(), C.gint(index))
 }
 
+// SetActive() is a wrapper around gtk_combo_box_set_active().
+func (v *ComboBox) Popup() {
+	C.gtk_combo_box_popup(v.native())
+}
+
+// SetActive() is a wrapper around gtk_combo_box_set_active().
+func (v *ComboBox) Popdown() {
+	C.gtk_combo_box_popdown(v.native())
+}
+
 // GetActiveIter is a wrapper around gtk_combo_box_get_active_iter().
 func (v *ComboBox) GetActiveIter() (*TreeIter, error) {
 	var cIter C.GtkTreeIter

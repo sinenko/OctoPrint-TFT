@@ -1,4 +1,7 @@
-.dialog { border: 2px solid black; }
+.dialog { 
+	border: 2px solid black; 
+	font-size: 15pt;
+}
 
 .notification {
     background-clip: padding-box;
@@ -13,4 +16,12 @@
 
 .error {
     background-color:rgba(204, 30, 30, 0.7);
+}
+
+.labelbig {
+		font-size: 13pt;
+}
+
+.combobox {
+		font-size: 32pt;
 }

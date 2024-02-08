@@ -258,6 +258,8 @@ type FilesResponse struct {
 
 // FileInformation contains information regarding a file.
 type FileInformation struct {
+	Children []*FileInformation
+	
 	// Name is name of the file without path. E.g. “file.gco” for a file
 	// “file.gco” located anywhere in the file system.
 	Name string `json:"name"`

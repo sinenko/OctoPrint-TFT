@@ -10,14 +10,15 @@ import (
 
 	"github.com/gotk3/gotk3/glib"
 	"github.com/gotk3/gotk3/gtk"
+	"github.com/mcuadros/OctoPrint-TFT/ui_lang"
 )
 
 // Set at compilation time.
 var Version = "0.1.x"
 var Build = "no-set"
 
-const panelW = 4
-const panelH = 2
+const panelW = 5
+const panelH = 4
 
 type Panel interface {
 	Grid() *gtk.Grid
@@ -54,7 +55,7 @@ func (p *CommonPanel) Initialize() {
 		p.AddButton(MustBox(gtk.ORIENTATION_HORIZONTAL, 0))
 	}
 
-	p.AddButton(MustButtonImage("Back", "back.svg", p.UI.GoHistory))
+	p.AddBackButton(MustButtonImage(ui_lang.Translate("Back"), "back.svg", p.UI.GoHistory))
 }
 
 func (p *CommonPanel) Parent() Panel {
@@ -65,6 +66,12 @@ func (p *CommonPanel) AddButton(b gtk.IWidget) {
 	x := len(p.buttons) % panelW
 	y := len(p.buttons) / panelW
 	p.g.Attach(b, x+1, y, 1, 1)
+	p.buttons = append(p.buttons, b)
+}
+
+func (p *CommonPanel) AddBackButton(b gtk.IWidget) {
+	x := len(p.buttons) % panelW
+	p.g.Attach(b, x+1, 3, 1, 1)
 	p.buttons = append(p.buttons, b)
 }
 
@@ -106,7 +113,7 @@ func (t *BackgroundTask) Start() {
 	t.Lock()
 	defer t.Unlock()
 
-	Logger.Debug("New background task started")
+	Logger.Debug(ui_lang.Translate("New background task started"))
 	go t.loop()
 
 	t.running = true
@@ -133,7 +140,7 @@ func (t *BackgroundTask) loop() {
 		case <-ticker.C:
 			t.execute()
 		case <-t.close:
-			Logger.Debug("Background task closed")
+			Logger.Debug(ui_lang.Translate("Background task closed"))
 			return
 		}
 	}
@@ -142,7 +149,7 @@ func (t *BackgroundTask) loop() {
 func (t *BackgroundTask) execute() {
 	_, err := glib.IdleAdd(t.task)
 	if err != nil {
-		log.Fatal("IdleAdd() failed:", err)
+		log.Fatal(ui_lang.Translate("IdleAdd() failed:"), err)
 	}
 }
 

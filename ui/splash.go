@@ -1,6 +1,9 @@
 package ui
 
-import "github.com/gotk3/gotk3/gtk"
+import (
+	"github.com/gotk3/gotk3/gtk"
+	"github.com/mcuadros/OctoPrint-TFT/ui_lang"
+)
 
 type SplashPanel struct {
 	CommonPanel
@@ -14,8 +17,8 @@ func NewSplashPanel(ui *UI) *SplashPanel {
 }
 
 func (m *SplashPanel) initialize() {
-	logo := MustImageFromFile("octoprint-logo.png")
-	m.Label = MustLabel("Connecting to OctoPrint...")
+	logo := MustImageFromFile("interprint-logo.svg")
+	m.Label = MustLabel(ui_lang.Translate("Connecting to OctoPrint..."))
 
 	box := MustBox(gtk.ORIENTATION_VERTICAL, 15)
 	box.SetVAlign(gtk.ALIGN_CENTER)

@@ -10,17 +10,22 @@ import (
 	"github.com/gotk3/gotk3/gtk"
 	"github.com/mcuadros/go-octoprint"
 	"github.com/sirupsen/logrus"
+	// selfupd "github.com/sanbornm/go-selfupdate"
+	l "github.com/mcuadros/OctoPrint-TFT/ui_lang"
+	exe "github.com/mcuadros/OctoPrint-TFT/ui_exec"
 )
 
 var (
 	StylePath    string
-	WindowName   = "OctoPrint-TFT"
-	WindowHeight = 320
-	WindowWidth  = 480
+	WindowName   = "INTERPRINT HAMMER PRO"
+	WindowHeight = 480
+	WindowWidth  = 800
+	detectingBoudRateCount = 0
 )
 
 const (
 	ImageFolder = "images"
+	GladeFolder = "glades"
 	CSSFilename = "style.css"
 )
 
@@ -35,6 +40,7 @@ type UI struct {
 	o *gtk.Overlay
 	w *gtk.Window
 	t time.Time
+	bldr *gtk.Builder
 
 	width, height int
 	sync.Mutex
@@ -55,7 +61,10 @@ func New(endpoint, key string, width, height int) *UI {
 
 		width:  width,
 		height: height,
+		
+		bldr: MustBuilder(),
 	}
+	
 
 	ui.b = NewBackgroundTask(time.Second*5, ui.verifyConnection)
 	ui.initialize()
@@ -87,7 +96,7 @@ func (ui *UI) loadStyle() {
 
 	s, err := gdk.ScreenGetDefault()
 	if err != nil {
-		logrus.Errorf("Error getting GDK screen: %s", err)
+		logrus.Errorf(l.Translate("Error getting GDK screen: %s"), err)
 		return
 	}
 
@@ -107,7 +116,7 @@ func (ui *UI) verifyConnection() {
 		}
 
 		// It's not an error since, error is being displayed already on the panel.
-		Logger.Debugf("Unexpected error: %s", err)
+		Logger.Debugf(l.Translate("Unexpected error: %s"), err)
 		return
 	}
 
@@ -116,26 +125,33 @@ func (ui *UI) verifyConnection() {
 	switch {
 	case s.Current.State.IsOperational():
 		if !ui.State.IsOperational() && !ui.State.IsPrinting() {
-			Logger.Info("Printer is ready")
+			Logger.Info(l.Translate("Printer is ready"))
 			ui.Add(DefaultPanel(ui))
 		}
 		return
 	case s.Current.State.IsPrinting():
 		if !ui.State.IsPrinting() {
-			Logger.Info("Printing a job")
+			Logger.Info(l.Translate("Printing a job"))
 			ui.Add(StatusPanel(ui, DefaultPanel(ui)))
 		}
 		return
 	case s.Current.State.IsError():
 		fallthrough
 	case s.Current.State.IsOffline():
-		Logger.Infof("Connection offline, connecting: %s", s.Current.State)
+		Logger.Infof(l.Translate("Connection offline, connecting: %s"), s.Current.State)
 		if err := (&octoprint.ConnectRequest{}).Do(ui.Printer); err != nil {
-			splash.Label.SetText(fmt.Sprintf("Error connecting to printer: %s", err))
+			splash.Label.SetText(fmt.Sprintf(l.Translate("Error connecting to printer: %s"), err))
 		}
 	case s.Current.State.IsConnecting():
-		Logger.Infof("Waiting for connection: %s", s.Current.State)
-		splash.Label.SetText(string(s.Current.State))
+		Logger.Infof(l.Translate("Waiting for connection: %s"), s.Current.State)
+		splash.Label.SetText(l.Translate(string(s.Current.State)))
+		if string(s.Current.State) == "Detecting baudrate" {
+			detectingBoudRateCount++
+			if detectingBoudRateCount > 2 {
+				exe.RebootUSB()
+				splash.Label.SetText(l.Translate("Rebooting MKS..."))
+			}
+		}
 	}
 
 	ui.Add(splash)
@@ -165,10 +181,12 @@ func (ui *UI) errToUser(err error) string {
 	text := err.Error()
 	if strings.Contains(text, "connection refused") {
 		return fmt.Sprintf(
-			"Unable to connect to %q (Key: %v), \nmaybe OctoPrint not running?",
+			l.Translate("Unable to connect to %q (Key: %v), \nmaybe OctoPrint not running?"),
 			ui.Printer.Endpoint, ui.Printer.APIKey != "",
 		)
 	}
 
-	return fmt.Sprintf("Unexpected error: %s", err)
+	return fmt.Sprintf(l.Translate("Unexpected error: %s"), err)
 }
+
+

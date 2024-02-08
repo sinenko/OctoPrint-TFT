@@ -10,6 +10,7 @@ import (
 	"github.com/mcuadros/go-octoprint"
 	"github.com/shirou/gopsutil/load"
 	"github.com/shirou/gopsutil/mem"
+	"github.com/mcuadros/OctoPrint-TFT/ui_lang"
 )
 
 var systemPanelInstance *systemPanel
@@ -45,11 +46,11 @@ func (m *systemPanel) createActionBar() gtk.IWidget {
 	bar.SetMarginBottom(5)
 	bar.SetMarginEnd(5)
 
-	if b := m.createRestartButton(); b != nil {
-		bar.Add(b)
-	}
+	// if b := m.createRestartButton(); b != nil {
+		// bar.Add(b)
+	// }
 
-	bar.Add(MustButton(MustImageFromFileWithSize("back.svg", 40, 40), m.UI.GoHistory))
+	bar.Add(MustButton(MustImageFromFileWithSize("back.svg", 80, 80), m.UI.GoHistory))
 
 	return bar
 }
@@ -101,14 +102,14 @@ func (m *systemPanel) createInfoBox() gtk.IWidget {
 	main.SetHExpand(true)
 	main.SetHAlign(gtk.ALIGN_CENTER)
 	main.SetVExpand(true)
-	main.Add(MustImageFromFileWithSize("octoprint-logo.png", 140, 140))
+	main.Add(MustImageFromFileWithSize("interprint-logo.svg", 140, 140))
 
 	info := MustBox(gtk.ORIENTATION_VERTICAL, 0)
 	info.SetVExpand(true)
 	info.SetVAlign(gtk.ALIGN_CENTER)
 	m.addOctoPrintTFT(info)
 
-	title := MustLabel("<b>Versions Information</b>")
+	title := MustLabel(ui_lang.Translate("<b>Versions Information</b>"))
 	title.SetMarginTop(15)
 	title.SetMarginBottom(5)
 	info.Add(title)
@@ -123,7 +124,7 @@ func (m *systemPanel) createInfoBox() gtk.IWidget {
 }
 
 func (m *systemPanel) addOctoPrintTFT(box *gtk.Box) {
-	title := MustLabel("<b>OctoPrint-TFT Version</b>")
+	title := MustLabel(ui_lang.Translate("<b>InterPrint PiSoft LCD version:</b>"))
 	title.SetMarginBottom(5)
 
 	info := MustBox(gtk.ORIENTATION_VERTICAL, 0)
@@ -140,7 +141,7 @@ func (m *systemPanel) addOctoPi(box *gtk.Box) {
 		return
 	}
 
-	box.Add(MustLabel("OctoPi Version: <b>%s</b>", bytes.Trim(v, "\n")))
+	box.Add(MustLabel(ui_lang.Translate("OctoPi Version: <b>%s</b>"), bytes.Trim(v, "\n")))
 }
 
 func (m *systemPanel) addOctoPrint(box *gtk.Box) {
@@ -150,27 +151,27 @@ func (m *systemPanel) addOctoPrint(box *gtk.Box) {
 		return
 	}
 
-	box.Add(MustLabel("OctoPrint Version: <b>%s (%s)</b>", r.Server, r.API))
+	box.Add(MustLabel(ui_lang.Translate("OctoPrint Version: <b>%s (%s)</b>"), r.Server, r.API))
 }
 
 func (m *systemPanel) addSystemInfo(box *gtk.Box) {
 	info := MustBox(gtk.ORIENTATION_VERTICAL, 0)
 	box.Add(info)
 
-	title := MustLabel("<b>System Information</b>")
+	title := MustLabel(ui_lang.Translate("<b>System Information</b>"))
 	title.SetMarginBottom(5)
 	title.SetMarginTop(15)
 	info.Add(title)
 
 	v, _ := mem.VirtualMemory()
 	info.Add(MustLabel(fmt.Sprintf(
-		"Memory Total / Free: <b>%s / %s</b>",
+		ui_lang.Translate("Memory Total / Free: <b>%s / %s</b>"),
 		humanize.Bytes(v.Total), humanize.Bytes(v.Free),
 	)))
 
 	l, _ := load.Avg()
 	info.Add(MustLabel(fmt.Sprintf(
-		"Load Average: <b>%.2f, %.2f, %.2f</b>",
+		ui_lang.Translate("Load Average: <b>%.2f, %.2f, %.2f</b>"),
 		l.Load1, l.Load5, l.Load15,
 	)))
 }

@@ -6,13 +6,14 @@ import (
 	"os"
 	"os/user"
 	"path/filepath"
-	"strconv"
-	"strings"
+	// "strconv"
+	// "strings"
 
 	"github.com/mcuadros/OctoPrint-TFT/ui"
-
+	"github.com/mcuadros/OctoPrint-TFT/ui_lang"
 	"github.com/gotk3/gotk3/gtk"
 	"gopkg.in/yaml.v1"
+	exe "github.com/mcuadros/OctoPrint-TFT/ui_exec"
 )
 
 const (
@@ -20,6 +21,7 @@ const (
 	EnvResolution = "OCTOPRINT_TFT_RESOLUTION"
 	EnvBaseURL    = "OCTOPRINT_HOST"
 	EnvAPIKey     = "OCTOPRINT_APIKEY"
+	EnvLang     	= "INTERPRINT_LANG"
 	EnvConfigFile = "OCTOPRINT_CONFIG_FILE"
 )
 
@@ -33,11 +35,15 @@ var (
 func init() {
 	ui.StylePath = os.Getenv(EnvStylePath)
 	Resolution = os.Getenv(EnvResolution)
+	exe.LoadConf()
+	exe.Vars.IsPrinting = false
+	exe.Vars.IsUpdating = false
+	exe.Vars.IsAllowLoadUnload = false
 
-	ConfigFile = os.Getenv(EnvConfigFile)
-	if ConfigFile == "" {
+	// ConfigFile = os.Getenv(EnvConfigFile)
+	// if ConfigFile == "" {
 		ConfigFile = findConfigFile()
-	}
+	// }
 
 	cfg := readConfig(ConfigFile)
 
@@ -54,6 +60,13 @@ func init() {
 		if cfg.API.Key != "" {
 			ui.Logger.Infof("Found API key at %q file", ConfigFile)
 		}
+	}
+	
+	// ui_lang.CurrentLang = os.Getenv("INTERPRINT_LANG")
+	ui_lang.CurrentLang = exe.Conf.Lang
+	if ui_lang.CurrentLang == "" {
+		ui_lang.CurrentLang = "en"
+		os.Setenv("INTERPRINT_LANG",ui_lang.CurrentLang)
 	}
 }
 
@@ -143,30 +156,32 @@ func doFindConfigFile(home string) string {
 }
 
 func getSize() (width, height int) {
-	if Resolution == "" {
-		return
-	}
+	width = 800
+	height = 480
+	// if Resolution == "" {
+		// return
+	// }
 
-	parts := strings.SplitN(Resolution, "x", 2)
-	if len(parts) != 2 {
-		ui.Logger.Fatalf("Malformed %s variable: %q", EnvResolution, Resolution)
-		return
-	}
+	// parts := strings.SplitN(Resolution, "x", 2)
+	// if len(parts) != 2 {
+		// ui.Logger.Fatalf("Malformed %s variable: %q", EnvResolution, Resolution)
+		// return
+	// }
 
-	var err error
-	width, err = strconv.Atoi(parts[0])
-	if err != nil {
-		ui.Logger.Fatalf("Malformed %s variable: %q, %s",
-			EnvResolution, Resolution, err)
-		return
-	}
+	// var err error
+	// width, err = strconv.Atoi(parts[0])
+	// if err != nil {
+		// ui.Logger.Fatalf("Malformed %s variable: %q, %s",
+			// EnvResolution, Resolution, err)
+		// return
+	// }
 
-	height, err = strconv.Atoi(parts[1])
-	if err != nil {
-		ui.Logger.Fatalf("Malformed %s variable: %q, %s",
-			EnvResolution, Resolution, err)
-		return
-	}
+	// height, err = strconv.Atoi(parts[1])
+	// if err != nil {
+		// ui.Logger.Fatalf("Malformed %s variable: %q, %s",
+			// EnvResolution, Resolution, err)
+		// return
+	// }
 
 	return
 }

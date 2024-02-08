@@ -7,6 +7,8 @@ import (
 
 	"github.com/gotk3/gotk3/gtk"
 	"github.com/mcuadros/go-octoprint"
+	"github.com/mcuadros/OctoPrint-TFT/ui_lang"
+	exe "github.com/mcuadros/OctoPrint-TFT/ui_exec"
 )
 
 var statusPanelInstance *statusPanel
@@ -18,7 +20,10 @@ type statusPanel struct {
 
 	bed, tool0, tool1  *LabelWithImage
 	file, left         *LabelWithImage
+	speedLabel				 *LabelWithImage
 	print, pause, stop *gtk.Button
+	isPauseIcon bool
+	currentSpeed int
 }
 
 func StatusPanel(ui *UI, parent Panel) Panel {
@@ -34,12 +39,31 @@ func StatusPanel(ui *UI, parent Panel) Panel {
 }
 
 func (m *statusPanel) initialize() {
+	m.currentSpeed = 100
 	defer m.Initialize()
 
-	m.Grid().Attach(m.createMainBox(), 1, 0, 4, 1)
-	m.Grid().Attach(m.createPrintButton(), 1, 1, 1, 1)
-	m.Grid().Attach(m.createPauseButton(), 2, 1, 1, 1)
-	m.Grid().Attach(m.createStopButton(), 3, 1, 1, 1)
+	m.Grid().Attach(m.createMainBox(), 1, 0, 5, 1)
+	m.Grid().Attach(m.createPrintButton(), 1, 2, 1, 1)
+	m.Grid().Attach(m.createPauseButton(), 2, 2, 1, 1)
+	m.Grid().Attach(m.createStopButton(), 3, 2, 1, 1)
+	m.Grid().Attach(m.createSlowButton(), 1, 3, 1, 1)
+	m.Grid().Attach(m.createFastButton(), 3, 3, 1, 1)
+	m.Grid().Attach(m.createSpeedBox(), 2, 3, 1, 1)
+}
+
+func (m *statusPanel) createSpeedBox() *gtk.Box {
+	m.speedLabel = MustLabelWithImage("", "")
+	m.speedLabel.Label.SetLabel(fmt.Sprintf(ui_lang.Translate("Speed: %d%%"), m.currentSpeed))
+
+	info := MustBox(gtk.ORIENTATION_VERTICAL, 0)
+	info.SetHExpand(true)
+	info.SetVExpand(true)
+	
+	info.Add(m.speedLabel)
+	info.SetMarginTop(50)
+	info.SetMarginStart(10)
+
+	return info
 }
 
 func (m *statusPanel) createProgressBar() *gtk.ProgressBar {
@@ -99,10 +123,10 @@ func (m *statusPanel) createTemperatureBox() *gtk.Box {
 }
 
 func (m *statusPanel) createPrintButton() gtk.IWidget {
-	m.print = MustButtonImage("Print", "status.svg", func() {
+	m.print = MustButtonImage(ui_lang.Translate("Print"), "status.svg", func() {
 		defer m.updateTemperature()
 
-		Logger.Warning("Starting a new job")
+		Logger.Warning(ui_lang.Translate("Starting a new job"))
 		if err := (&octoprint.StartRequest{}).Do(m.UI.Printer); err != nil {
 			Logger.Error(err)
 			return
@@ -113,10 +137,10 @@ func (m *statusPanel) createPrintButton() gtk.IWidget {
 }
 
 func (m *statusPanel) createPauseButton() gtk.IWidget {
-	m.pause = MustButtonImage("Pause", "pause.svg", func() {
+	m.pause = MustButtonImage(ui_lang.Translate("Pause"), "pause.svg", func() {
 		defer m.updateTemperature()
 
-		Logger.Warning("Pausing/Resuming job")
+		Logger.Warning(ui_lang.Translate("Pausing/Resuming job"))
 		cmd := &octoprint.PauseRequest{Action: octoprint.Toggle}
 		if err := cmd.Do(m.UI.Printer); err != nil {
 			Logger.Error(err)
@@ -128,10 +152,10 @@ func (m *statusPanel) createPauseButton() gtk.IWidget {
 }
 
 func (m *statusPanel) createStopButton() gtk.IWidget {
-	m.stop = MustButtonImage("Stop", "stop.svg", func() {
+	m.stop = MustButtonImage(ui_lang.Translate("Stop"), "stop.svg", func() {
 		defer m.updateTemperature()
 
-		Logger.Warning("Stopping job")
+		Logger.Warning(ui_lang.Translate("Stopping job"))
 		if err := (&octoprint.CancelRequest{}).Do(m.UI.Printer); err != nil {
 			Logger.Error(err)
 			return
@@ -140,6 +164,52 @@ func (m *statusPanel) createStopButton() gtk.IWidget {
 
 	return m.stop
 }
+
+func (m *statusPanel) createSlowButton() gtk.IWidget {
+	do := func() {
+	
+		m.currentSpeed -= 2
+		if m.currentSpeed < 50 {
+			m.currentSpeed = 50
+			return
+		}
+		m.speedLabel.Label.SetLabel(fmt.Sprintf(ui_lang.Translate("Speed: %d%%"), m.currentSpeed))
+		r := &octoprint.CommandRequest{}
+		r.Commands = []string{fmt.Sprintf("M220 S%d", m.currentSpeed)}
+		
+		if err := r.Do(m.UI.Printer); err != nil {
+			Logger.Error(err)
+			return
+		}
+	}
+
+	return MustButtonImage(ui_lang.Translate("Slower"), "decrease.svg", do)
+}
+
+func (m *statusPanel) createFastButton() gtk.IWidget {
+	do := func() {
+	
+		m.currentSpeed += 2
+		if m.currentSpeed > 200 {
+			m.currentSpeed = 200
+			return
+		}
+		m.speedLabel.Label.SetLabel(fmt.Sprintf(ui_lang.Translate("Speed: %d%%"), m.currentSpeed))
+		r := &octoprint.CommandRequest{}
+		r.Commands = []string{fmt.Sprintf("M220 S%d", m.currentSpeed)}
+		
+		if err := r.Do(m.UI.Printer); err != nil {
+			Logger.Error(err)
+			return
+		}
+	}
+
+	return MustButtonImage(ui_lang.Translate("Faster"), "increase.svg", do)
+}
+
+
+
+
 
 func (m *statusPanel) update() {
 	m.updateTemperature()
@@ -157,7 +227,7 @@ func (m *statusPanel) updateTemperature() {
 
 	m.tool1.Hide()
 	for tool, s := range s.Temperature.Current {
-		text := fmt.Sprintf("%s: %.0f°C / %.0f°C", strings.Title(tool), s.Actual, s.Target)
+		text := fmt.Sprintf("%s: %.0f°C / %.0f°C", ui_lang.Translate(strings.Title(tool)), s.Actual, s.Target)
 		switch tool {
 		case "bed":
 			m.bed.Label.SetLabel(text)
@@ -174,12 +244,26 @@ func (m *statusPanel) doUpdateState(s *octoprint.PrinterState) {
 	switch {
 	case s.Flags.Printing:
 		m.print.SetSensitive(false)
+		if(!m.isPauseIcon){
+			m.pause.SetLabel(ui_lang.Translate("Pause"))
+			m.pause.SetImage(MustImageFromFile("pause.svg"))
+			m.isPauseIcon = true
+		}
+		if(!m.isPauseIcon && !exe.Vars.IsPrinting){
+			exe.Vars.IsPrinting = true
+		}
 		m.pause.SetSensitive(true)
 		m.stop.SetSensitive(true)
 	case s.Flags.Paused:
 		m.print.SetSensitive(false)
-		m.pause.SetLabel("Resume")
-		m.pause.SetImage(MustImageFromFile("resume.svg"))
+		if(m.isPauseIcon){
+			m.pause.SetLabel(ui_lang.Translate("Resume"))
+			m.pause.SetImage(MustImageFromFile("resume.svg"))
+			m.isPauseIcon = false
+		}
+		if(m.isPauseIcon && exe.Vars.IsPrinting){
+			exe.Vars.IsPrinting = false
+		}
 		m.pause.SetSensitive(true)
 		m.stop.SetSensitive(true)
 		return
@@ -187,14 +271,16 @@ func (m *statusPanel) doUpdateState(s *octoprint.PrinterState) {
 		m.print.SetSensitive(true)
 		m.pause.SetSensitive(false)
 		m.stop.SetSensitive(false)
+		m.isPauseIcon = true
+		exe.Vars.IsPrinting = false
 	default:
 		m.print.SetSensitive(false)
 		m.pause.SetSensitive(false)
 		m.stop.SetSensitive(false)
+		m.isPauseIcon = true
+		exe.Vars.IsPrinting = false
 	}
 
-	m.pause.SetLabel("Pause")
-	m.pause.SetImage(MustImageFromFile("pause.svg"))
 }
 
 func (m *statusPanel) updateJob() {
@@ -204,31 +290,32 @@ func (m *statusPanel) updateJob() {
 		return
 	}
 
-	file := "<i>not-set</i>"
+	file := ui_lang.Translate("<i>not-set</i>")
 	if s.Job.File.Name != "" {
 		file = filenameEllipsis(s.Job.File.Name)
 	}
 
-	m.file.Label.SetLabel(fmt.Sprintf("File: %s", file))
+	m.file.Label.SetLabel(fmt.Sprintf(ui_lang.Translate("File: %s"), file))
 	m.pb.SetFraction(s.Progress.Completion / 100)
 
 	if m.UI.State.IsOperational() {
-		m.left.Label.SetLabel("Printer is ready")
+		m.left.Label.SetLabel(ui_lang.Translate("Printer is ready"))
+		
 		return
 	}
 
 	var text string
 	switch s.Progress.Completion {
 	case 100:
-		text = fmt.Sprintf("Job Completed in %s", time.Duration(int64(s.Job.LastPrintTime)*1e9))
+		text = fmt.Sprintf(ui_lang.Translate("Job Completed in %s"), time.Duration(int64(s.Job.LastPrintTime)*1e9))
 	case 0:
-		text = "Warming up ..."
+		text = ui_lang.Translate("Warming up ...")
 	default:
 		e := time.Duration(int64(s.Progress.PrintTime) * 1e9)
 		l := time.Duration(int64(s.Progress.PrintTimeLeft) * 1e9)
-		text = fmt.Sprintf("Elapsed/Left: %s / %s", e, l)
+		text = fmt.Sprintf(ui_lang.Translate("Elapsed/Left: %s / %s"), e, l)
 		if l == 0 {
-			text = fmt.Sprintf("Elapsed: %s", e)
+			text = fmt.Sprintf(ui_lang.Translate("Elapsed: %s"), e)
 		}
 	}
 

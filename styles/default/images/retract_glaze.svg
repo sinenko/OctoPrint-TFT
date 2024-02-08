@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="60.13768"
+   height="60.776516"
+   viewBox="0 0 60.137677 60.776516"
+   id="svg4160"
+   version="1.1"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="retract_glaze.svg">
+  <defs
+     id="defs4162">
+    <marker
+       id="DistanceX"
+       orient="auto"
+       refX="0"
+       refY="0"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         d="M 3,-3 -3,3 M 0,-5 V 5"
+         style="stroke:#000000;stroke-width:0.5"
+         id="path817" />
+    </marker>
+    <pattern
+       height="8"
+       id="Hatch"
+       patternUnits="userSpaceOnUse"
+       width="8"
+       x="0"
+       y="0">
+      <path
+         d="M8 4 l-4,4"
+         linecap="square"
+         stroke="#000000"
+         stroke-width="0.25"
+         id="path820" />
+      <path
+         d="M6 2 l-4,4"
+         linecap="square"
+         stroke="#000000"
+         stroke-width="0.25"
+         id="path822" />
+      <path
+         d="M4 0 l-4,4"
+         linecap="square"
+         stroke="#000000"
+         stroke-width="0.25"
+         id="path824" />
+    </pattern>
+    <symbol
+       id="*Model_Space" />
+    <symbol
+       id="*Paper_Space" />
+    <symbol
+       id="*Paper_Space0" />
+    <style
+       type="text/css"
+       id="style8574"><![CDATA[
+    .fil0 {fill:#4C2611}
+    .fil1 {fill:#4C2611}
+    .fil2 {fill:#FEFEFE}
+   ]]></style>
+    <style
+       type="text/css"
+       id="style8706"><![CDATA[
+    .fil0 {fill:#965339}
+   ]]></style>
+    <marker
+       id="DistanceX-7"
+       orient="auto"
+       refX="0"
+       refY="0"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         d="M 3,-3 -3,3 M 0,-5 V 5"
+         style="stroke:#000000;stroke-width:0.5"
+         id="path817-5" />
+    </marker>
+    <pattern
+       height="8"
+       id="Hatch-1"
+       patternUnits="userSpaceOnUse"
+       width="8"
+       x="0"
+       y="0">
+      <path
+         d="M8 4 l-4,4"
+         linecap="square"
+         stroke="#000000"
+         stroke-width="0.25"
+         id="path820-5" />
+      <path
+         d="M6 2 l-4,4"
+         linecap="square"
+         stroke="#000000"
+         stroke-width="0.25"
+         id="path822-0" />
+      <path
+         d="M4 0 l-4,4"
+         linecap="square"
+         stroke="#000000"
+         stroke-width="0.25"
+         id="path824-9" />
+    </pattern>
+    <symbol
+       id="*Model_Space-8" />
+    <symbol
+       id="*Paper_Space-3" />
+    <symbol
+       id="*Paper_Space0-3" />
+    <style
+       type="text/css"
+       id="style8574-8"><![CDATA[
+    .fil0 {fill:#4C2611}
+    .fil1 {fill:#4C2611}
+    .fil2 {fill:#FEFEFE}
+   ]]></style>
+    <style
+       type="text/css"
+       id="style8706-9"><![CDATA[
+    .fil0 {fill:#965339}
+   ]]></style>
+    <clipPath
+       id="clipPath9571"
+       clipPathUnits="userSpaceOnUse">
+      <use
+         height="100%"
+         width="100%"
+         id="use9573"
+         xlink:href="#g9567"
+         y="0"
+         x="0" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.6"
+     inkscape:cx="-39.306859"
+     inkscape:cy="-2.7350782"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer3"
+     showgrid="true"
+     units="in"
+     showguides="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:snap-bbox="true"
+     inkscape:snap-global="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4712"
+       originx="-9.9771178"
+       originy="-29.820954" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4165">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Home"
+     style="display:inline"
+     transform="translate(-3.5328446,2.2636422)">
+    <g
+       transform="matrix(0.89703237,0,0,0.89703237,4.8718685,-209.4098)"
+       id="layer1-7"
+       inkscape:label="Layer 1">
+      <g
+         transform="matrix(0.85181638,0,0,0.9244294,16.785408,234.63085)"
+         id="g8724-8"
+         style="clip-rule:evenodd;fill:#00ccff;fill-opacity:1;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision">
+        <g
+           style="fill:#00ccff;fill-opacity:1"
+           id="Слой_x0020_1-0">
+          <metadata
+             id="CorelCorpID_0Corel-Layer-3" />
+          <path
+             sodipodi:nodetypes="cccccsccccscccccccccccccccccccccccccc"
+             style="fill:#00ccff;fill-opacity:1"
+             inkscape:connector-curvature="0"
+             class="fil0"
+             d="m 22,52 h -3 c 0,0 0,0 -4,-6 C 11.221865,41.81775 13,43 12,36 11,35 10,35 9,32 V 25 10.252507 L 19,10 C 19,-1 12,5 10,6 2,9 -3,2 2,1 c 2,0 3,4 7,2 2,-1 3,-3 6,-3 6,-1 8,4 8,10 l 9.271816,0.04865 C 32.271816,10.048645 33,30 32,32 c -1,4 -2,3 -3,4 0,6 1,5 -2,9 -2,2 -5,7 -5,7 z M 19.986156,48.529787 24,42.461833 h -7.538167 c 1,2 2.524323,4.067954 3.524323,6.067954 z M 14.385498,40 H 26 V 36 H 14.385498 Z M 29,29 H 12 c 0,2 0,3 2,4 h 12 c 3,-1 3,-2 3,-4 z M 29.07634,13 12.184553,13.135908 11.980691,26.56294 H 29 Z"
+             id="path8711-8" />
+        </g>
+      </g>
+      <g
+         clip-path="url(#clipPath9571)"
+         id="g9569">
+        <g
+           id="g9567"
+           inkscape:label="Clip" />
+      </g>
+      <path
+         sodipodi:nodetypes="ccc"
+         inkscape:connector-curvature="0"
+         id="path9611"
+         d="m 40.297316,289.19764 -6.000371,-6.00037 -5.575149,5.85863 5.480655,-3.68527 z"
+         style="fill:#00ccff;fill-opacity:1;stroke:#ffffff;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         sodipodi:nodetypes="ccc"
+         inkscape:connector-curvature="0"
+         id="path9611-2"
+         d="m 38.30695,290.19337 -4.040864,-4.04086 -3.754505,3.94541 3.69087,-2.4818 z"
+         style="fill:#00ccff;fill-opacity:1;stroke:#ffffff;stroke-width:0.1781798px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>

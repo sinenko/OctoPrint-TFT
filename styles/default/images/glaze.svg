@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="60.13768"
+   height="60.776516"
+   viewBox="0 0 60.137677 60.776516"
+   id="svg4160"
+   version="1.1"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="glaze.svg">
+  <defs
+     id="defs4162">
+    <style
+       id="style7263"
+       type="text/css">
+   <![CDATA[
+    .fil0 {fill:#3D2618}
+   ]]>
+  </style>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="-13.297951"
+     inkscape:cy="-6.5734319"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer3"
+     showgrid="true"
+     units="in"
+     showguides="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:snap-bbox="true"
+     inkscape:snap-global="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4712"
+       originx="-9.9771178"
+       originy="-29.820954" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4165">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Home"
+     style="display:inline"
+     transform="translate(-3.5328446,2.2636422)">
+    <g
+       style="clip-rule:evenodd;fill:#00ccff;fill-opacity:1;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+       id="g7284"
+       transform="matrix(0.06730791,0,0,0.06730791,6.6225903,5.5369636)">
+      <g
+         id="Слой_x0020_1"
+         style="fill:#00ccff;fill-opacity:1">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+
+  <path
+   id="path7268"
+   d="m 523,288 c 24,38 35,99 67,121 58,39 162,78 143,232 -3,29 -14,49 -26,72 l -43,63 143,-1 C 829,706 808,726 781,674 770,652 777,591 765,552 725,418 618,441 538,219 483,67 567,40 570,0 490,3 423,99 393,157 341,257 327,299 249,359 174,417 116,451 63,519 14,582 -18,716 11,772 l 117,4 C 139,704 109,656 150,571 199,471 261,439 316,378 352,337 411,195 455,143 423,240 349,372 284,442 212,519 112,649 147,775 c 42,3 199,11 221,-13 27,-29 69,-119 87,-163 68,-170 42,-257 40,-440 1,2 2,3 3,6 l 6,25 c 10,53 -1,24 19,98 z"
+   class="fil0"
+   inkscape:connector-curvature="0"
+   style="fill:#00ccff;fill-opacity:1" />
+
+  <path
+   id="path7270"
+   d="m 523,288 c -9,19 13,134 -27,276 -10,36 -28,84 -46,114 l -58,82 c -9,13 1,-6 -9,16 H 659 C 676,728 749,606 675,497 630,432 555,460 523,288 Z"
+   class="fil0"
+   inkscape:connector-curvature="0"
+   style="fill:#00ccff;fill-opacity:1" />
+
+ </g>
+    </g>
+  </g>
+</svg>

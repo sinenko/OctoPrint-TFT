@@ -1,5 +1,9 @@
 package ui
 
+import (
+	l "github.com/mcuadros/OctoPrint-TFT/ui_lang"
+)
+
 var defaultPanelInstance *defaultPanel
 
 type defaultPanel struct {
@@ -17,14 +21,15 @@ func DefaultPanel(ui *UI) Panel {
 }
 
 func (m *defaultPanel) initialize() {
-	m.Grid().Attach(MustButtonImage("Status", "status.svg", m.showStatus), 1, 0, 1, 1)
-	m.Grid().Attach(MustButtonImage("Heat Up", "heat-up.svg", m.showTemperature), 2, 0, 1, 1)
-	m.Grid().Attach(MustButtonImage("Move", "move.svg", m.showMove), 3, 0, 1, 1)
-	m.Grid().Attach(MustButtonImage("Home", "home.svg", m.showHome), 4, 0, 1, 1)
-	m.Grid().Attach(MustButtonImage("Filament", "filament.svg", m.showFilament), 1, 1, 1, 1)
-	m.Grid().Attach(MustButtonImage("Control", "control.svg", m.showControl), 2, 1, 1, 1)
-	m.Grid().Attach(MustButtonImage("Files", "files.svg", m.showFiles), 3, 1, 1, 1)
-	m.Grid().Attach(MustButtonImage("System", "settings.svg", m.showSystem), 4, 1, 1, 1)
+	m.Grid().Attach(MustButtonImage(l.Translate("Status"), "status.svg", m.showStatus), 1, 0, 1, 1)
+	m.Grid().Attach(MustButtonImage(l.Translate("Heat Up"), "heat-up.svg", m.showTemperature), 2, 0, 1, 1)
+	m.Grid().Attach(MustButtonImage(l.Translate("Move"), "move.svg", m.showMove), 3, 0, 1, 1)
+	m.Grid().Attach(MustButtonImage(l.Translate("Home"), "home.svg", m.showHome), 4, 0, 1, 1)
+	m.Grid().Attach(MustButtonImage(l.Translate("Settings"), "settings.svg", m.showSettings), 5, 0, 1, 1)
+	m.Grid().Attach(MustButtonImage(l.Translate("Filament"), "filament.svg", m.showFilament), 1, 1, 1, 1)
+	m.Grid().Attach(MustButtonImage(l.Translate("Control"), "control.svg", m.showControl), 2, 1, 1, 1)
+	m.Grid().Attach(MustButtonImage(l.Translate("Files"), "files.svg", m.showFiles), 3, 1, 1, 1)
+	m.Grid().Attach(MustButtonImage(l.Translate("System"), "info.svg", m.showSystem), 4, 1, 1, 1)
 }
 
 func (m *defaultPanel) showStatus() {
@@ -57,4 +62,8 @@ func (m *defaultPanel) showFiles() {
 
 func (m *defaultPanel) showSystem() {
 	m.UI.Add(SystemPanel(m.UI, m))
+}
+
+func (m *defaultPanel) showSettings() {
+	m.UI.Add(SettingsPanel(m.UI, m))
 }
